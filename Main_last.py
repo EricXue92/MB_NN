@@ -41,20 +41,22 @@ def load_mb_data(dataset, target, MB_dict):
     # recording =  { x: y for x, y in zip(X.columns, range(0,len(X.columns)))}
     column_names = X.columns
     print(column_names)
+
+    # One-hot encoding for X
+    X = X.astype(str)
+    X = pd.get_dummies(X)
+
     X = X.to_numpy()
+
+
     y = df[target]
+    #https://machinelearningmastery.com/multi-class-classification-tutorial-keras-deep-learning-library/
     print(y.value_counts())
     num_class = len( y.value_counts() )
-
-    print(y)
-
     encoder = LabelEncoder() 
     y = encoder.fit_transform(y)
-    print(y)
-
     # Convert integers to dummy variables (i.e. one hot encoded)
     y = to_categorical(y)
-    print(y)
 
     return X, y, column_names, num_class
 
